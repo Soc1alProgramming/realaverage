@@ -57,12 +57,29 @@
     padding:20px 22px;box-shadow:var(--shadow);
   }
 
-  .grid-setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+  .grid-setup{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:16px;
+    align-items:stretch;
+  }
+  .grid-setup > div{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+  .grid-setup > div label{
+    flex:0 0 auto;
+  }
+  .grid-setup > div input{
+    margin-top:auto;
+  }
   label{display:block;font-size:12px;font-weight:500;color:#54615a;margin-bottom:5px;
     text-transform:uppercase;letter-spacing:.04em;}
   input[type=number],input[type=month],input[type=text]{
-    width:100%;padding:9px 10px;border:1px solid var(--paper-line);border-radius:4px;
+    width:100%;min-width:0;max-width:100%;padding:9px 10px;border:1px solid var(--paper-line);border-radius:4px;
     font-family:'IBM Plex Mono',monospace;font-size:14px;background:var(--paper);color:var(--ink);
+    -webkit-appearance:none;appearance:none;
   }
   input:focus{outline:2px solid var(--sage);outline-offset:1px;}
 
@@ -496,13 +513,15 @@ document.getElementById('fundStart').addEventListener('input', recalc);
 document.getElementById('fundContribution').addEventListener('input', recalc);
 
 // Seed with a realistic starter example
-addExpenseRow('Rent / mortgage', 1800, 'monthly', true);
-addExpenseRow('Groceries', 650, 'monthly', true);
-addExpenseRow('Utilities', 220, 'monthly', true);
-addExpenseRow('Car insurance', 140, 'monthly', true);
-addExpenseRow('Minimum debt payments', 300, 'monthly', true);
-addExpenseRow('Dining out / entertainment', 300, 'monthly', false);
+addExpenseRow('Rent / mortgage', 1950, 'monthly', true);
+addExpenseRow('Utilities', 350, 'monthly', true);
+addExpenseRow('Car insurance', 250, 'monthly', true);
 addExpenseRow('Car registration', 250, 'annual', true);
+addExpenseRow('Minimum debt payments', 200, 'monthly', true);
+addExpenseRow('Groceries', 550, 'monthly', true);
+addExpenseRow('Dining out / entertainment', 300, 'monthly', false);
+addExpenseRow('Subscriptions', 70, 'monthly', false);
+
 document.querySelectorAll('#expenseTable tbody tr')[6].querySelector('[data-field=month]').value = 6;
 expenseRows[6].month = 6;
 
