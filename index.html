@@ -198,18 +198,18 @@
   <div class="card grid-setup">
     <div>
       <label for="startMonth">Forecast starts</label>
-      <input type="month" id="startMonth" value="2026-08">
+      <input type="month" id="startMonth">
     </div>
     <div>
       <label for="baseIncome">Base monthly net income</label>
-      <input type="number" id="baseIncome" value="5200" min="0" step="50">
+      <input type="number" id="baseIncome" value="5500" min="0" step="50">
     </div>
     <div>
-      <label for="fundStart">Emergency fund — current balance</label>
-      <input type="number" id="fundStart" value="4000" min="0" step="50">
+      <label for="fundStart">Emergency/savings fund — current balance</label>
+      <input type="number" id="fundStart" value="5000" min="0" step="50">
     </div>
     <div>
-      <label for="fundContribution">Planned monthly contribution to fund</label>
+      <label for="fundContribution">Planned monthly contribution to savings fund</label>
       <input type="number" id="fundContribution" value="150" min="0" step="25">
     </div>
   </div>
@@ -263,7 +263,7 @@
 
   <footer class="note">
     <strong>Privacy:</strong> this page has no backend and no storage — every number lives only in your browser tab for the current session. Nothing is sent anywhere or saved anywhere. Closing the tab or refreshing erases it.<br><br>
-    <strong>How this is calculated:</strong> each month, essential + discretionary expenses (plus any irregular items due that month) are subtracted from income. If the result is negative and essentials aren't fully covered by income alone, the shortfall is drawn from the emergency fund. If the fund can't cover it, that month is flagged and counted toward the funding gap below. Surplus months contribute your set amount to the fund (skipped in shortfall months). This is a planning estimate, not financial advice — treat the "extra income needed" figure as a rough target.<br><br>
+    <strong>How this is calculated:</strong> each month, essential + discretionary expenses (plus any irregular items due that month) are subtracted from income. If the result is negative and essentials aren't fully covered by income alone, the shortfall is drawn from the emergency fund. If the fund can't cover it, that month is flagged and counted toward the funding gap below. Surplus months contribute your set amount to the fund (skipped in shortfall months). This is a planning estimate, not financial advice — treat the "extra income needed" figure as a rough target. <br><br>
     <strong>Powered by Brown's Botanicals</strong>
   </footer>
 
@@ -273,6 +273,15 @@
 let incomeRows = [];
 let expenseRows = [];
 let idCounter = 0;
+
+function setDefaultStartMonth(){
+  const today = new Date();
+  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  const y = nextMonth.getFullYear();
+  const m = String(nextMonth.getMonth() + 1).padStart(2, '0');
+  document.getElementById('startMonth').value = `${y}-${m}`;
+}
+setDefaultStartMonth();
 
 function newId(){ return 'r' + (idCounter++); }
 
@@ -525,13 +534,13 @@ document.getElementById('fundStart').addEventListener('input', recalc);
 document.getElementById('fundContribution').addEventListener('input', recalc);
 
 // Seed with a realistic starter example
-addExpenseRow('Rent / mortgage', 1800, 'monthly', true);
-addExpenseRow('Groceries', 650, 'monthly', true);
-addExpenseRow('Utilities', 220, 'monthly', true);
-addExpenseRow('Car insurance', 140, 'monthly', true);
-addExpenseRow('Minimum debt payments', 300, 'monthly', true);
-addExpenseRow('Dining out / entertainment', 300, 'monthly', false);
-addExpenseRow('Car registration', 250, 'annual', true);
+addExpenseRow('Rent / mortgage', 1900, 'monthly', true);
+addExpenseRow('Groceries', 850, 'monthly', true);
+addExpenseRow('Utilities', 400, 'monthly', true);
+addExpenseRow('Car insurance', 250, 'monthly', true);
+addExpenseRow('Minimum debt payments', 350, 'monthly', true);
+addExpenseRow('Dining out / entertainment', 600, 'monthly', false);
+addExpenseRow('Car registration', 200, 'annual', true);
 document.querySelectorAll('#expenseTable tbody tr')[6].querySelector('[data-field=month]').value = 6;
 expenseRows[6].month = 6;
 
